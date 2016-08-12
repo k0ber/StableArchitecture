@@ -1,7 +1,6 @@
 package com.nik.noveo.stablearchitecture.news.mvp;
 
 import com.nik.noveo.stablearchitecture.news.NewsRepository;
-import com.nik.noveo.stablearchitecture.utils.RxUtils;
 
 import javax.inject.Inject;
 
@@ -36,7 +35,6 @@ public class NewsPresenter implements NewsContract.Presenter {
     public void loadNews() {
         view.setLoading(true);
         newsRepository.getNews()
-                .compose(RxUtils.setSchedulers())
                 .doOnNext(s -> { if (view != null) view.setNewsText(s); })
                 .doOnTerminate(() -> { if (view != null) view.setLoading(false); });
     }
