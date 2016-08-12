@@ -35,8 +35,13 @@ public class NewsPresenter implements NewsContract.Presenter {
     public void loadNews() {
         view.setLoading(true);
         newsRepository.getNews()
-                .doOnNext(s -> { if (view != null) view.setNewsText(s); })
-                .doOnTerminate(() -> { if (view != null) view.setLoading(false); });
+                .doOnNext(s -> {
+                    if (view != null) view.setNewsText(s);
+                })
+                .doOnTerminate(() -> {
+                    if (view != null) view.setLoading(false);
+                })
+                .subscribe();
     }
 
 }
