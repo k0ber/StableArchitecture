@@ -2,37 +2,32 @@ package com.nik.noveo.stablearchitecture.news.mvp;
 
 import android.os.Bundle;
 
+import com.nik.noveo.stablearchitecture.App;
 import com.nik.noveo.stablearchitecture.news.NewsActivity;
-import com.nik.noveo.stablearchitecture.news.NewsRepository;
+
+import javax.inject.Inject;
 
 
 public class NewsActivityMVP extends NewsActivity implements NewsContract.View {
 
-    //    @Inject
+    @Inject
     NewsContract.Presenter presenter;
-
-    @Override
-    public void loadClicked() {
-        presenter.loadNews();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // todo replace with dagger
-        presenter = new NewsPresenter(new NewsRepository(), this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+        ((App) getApplication()).componentMVP(this).inject(this);
         presenter.onViewAttached();
     }
 
     @Override
     public void setPresenter(NewsContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void loadClicked() {
+        presenter.loadNews();
     }
 
     @Override

@@ -2,6 +2,10 @@ package com.nik.noveo.stablearchitecture;
 
 import android.app.Application;
 
+import com.nik.noveo.stablearchitecture.news.mvp.NewsContract;
+import com.nik.noveo.stablearchitecture.news.mvp.di.ApplicationComponentMVP;
+import com.nik.noveo.stablearchitecture.news.mvp.di.DaggerApplicationComponentMVP;
+import com.nik.noveo.stablearchitecture.news.mvp.di.NewsPresenterModule;
 import com.nik.noveo.stablearchitecture.news.mvvi.di.ApplicationComponentMVVI;
 import com.nik.noveo.stablearchitecture.news.mvvi.di.DaggerApplicationComponentMVVI;
 
@@ -22,4 +26,10 @@ public class App extends Application {
         return applicationComponentMVVI;
     }
 
+    public ApplicationComponentMVP componentMVP(NewsContract.View view) {
+        return DaggerApplicationComponentMVP
+                .builder()
+                .newsPresenterModule(new NewsPresenterModule(view))
+                .build();
+    }
 }

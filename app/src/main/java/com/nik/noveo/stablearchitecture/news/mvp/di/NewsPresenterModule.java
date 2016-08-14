@@ -28,7 +28,7 @@ public class NewsPresenterModule {
     }
 
     @Provides
-    NewsPresenter providePresenter(NewsRepository newsRepository, NewsContract.View view) {
+    NewsContract.Presenter providePresenter(NewsRepository newsRepository, NewsContract.View view) {
         return new NewsPresenter(newsRepository, view);
     }
 }
