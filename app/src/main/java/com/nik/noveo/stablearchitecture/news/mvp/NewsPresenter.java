@@ -1,8 +1,11 @@
 package com.nik.noveo.stablearchitecture.news.mvp;
 
 import com.nik.noveo.stablearchitecture.news.NewsRepository;
+import com.nik.noveo.stablearchitecture.utils.RxUtils;
 
 import javax.inject.Inject;
+
+import rx.Observable;
 
 public class NewsPresenter implements NewsContract.Presenter {
 
@@ -32,16 +35,13 @@ public class NewsPresenter implements NewsContract.Presenter {
     }
 
     @Override
-    public void loadNews() {
+    public Observable<Void> loadNews() {
         view.setLoading(true);
-        newsRepository.getNews()
-                .doOnNext(s -> {
-                    if (view != null) view.setNewsText(s);
-                })
-                .doOnTerminate(() -> {
-                    if (view != null) view.setLoading(false);
-                })
-                .subscribe();
+
+        return newsRepository.getNews()
+                .doOnNext(s -> view.setNewsText(s))
+                .doOnTerminate(() -> view.setLoading(false))
+                .compose(RxUtils.hideType());
     }
 
 }

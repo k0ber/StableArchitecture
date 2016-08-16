@@ -1,10 +1,12 @@
 package com.nik.noveo.stablearchitecture.news.mvp;
 
+import rx.Observable;
+
 public interface NewsContract {
 
     interface Presenter {
         void onViewAttached();
-        void loadNews();
+        Observable<Void> loadNews();
     }
 
     interface View {

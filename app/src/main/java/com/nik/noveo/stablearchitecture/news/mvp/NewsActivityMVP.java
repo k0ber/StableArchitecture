@@ -27,7 +27,7 @@ public class NewsActivityMVP extends NewsActivity implements NewsContract.View {
 
     @Override
     public void loadClicked() {
-        presenter.loadNews();
+        subscriptions.add(presenter.loadNews().subscribe());
     }
 
     @Override
