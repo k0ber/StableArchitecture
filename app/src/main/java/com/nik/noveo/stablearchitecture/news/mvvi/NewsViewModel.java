@@ -24,18 +24,18 @@ public class NewsViewModel {
     private BehaviorSubject<String> postSubject = BehaviorSubject.create("Nothing to show");
     private BehaviorSubject<Boolean> loadingSubject = BehaviorSubject.create(false);
 
-    public Observable<String> postsObservable() {
+    Observable<String> postsObservable() {
         return postSubject.asObservable();
     }
 
-    public Observable<Boolean> loadingObservable() {
+    Observable<Boolean> loadingObservable() {
         return loadingSubject.asObservable();
     }
     //endregion
 
 
     //region Business Logic
-    public Observable<Void> loadNews() {
+    Observable<Void> loadNews() {
         if (loadingSubject.getValue()) {
             return Observable.empty();
         }

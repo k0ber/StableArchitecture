@@ -7,17 +7,17 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ApplicationModuleMVVI {
+class ApplicationModuleMVVI {
 
     @Provides
-    public NewsRepository provideNewsRepository() {
+    NewsRepository provideNewsRepository() {
         return new NewsRepository();
     }
 
 
 
     @Provides
-    public NewsViewModel provideNewsViewModel(NewsRepository newsRepository) {
+    NewsViewModel provideNewsViewModel(NewsRepository newsRepository) {
         return new NewsViewModel(newsRepository);
     }
 
