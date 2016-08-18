@@ -14,5 +14,4 @@ public interface NewsContract {
         void setLoading(boolean isLoading);
         void setNewsText(String text);
     }
-
 }

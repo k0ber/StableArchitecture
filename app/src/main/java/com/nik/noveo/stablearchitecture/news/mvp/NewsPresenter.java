@@ -12,7 +12,6 @@ public class NewsPresenter implements NewsContract.Presenter {
     private NewsRepository newsRepository;
     private NewsContract.View view;
 
-
     @Inject
     public NewsPresenter(NewsRepository newsRepository, NewsContract.View view) {
         this.newsRepository = newsRepository;
@@ -43,5 +42,4 @@ public class NewsPresenter implements NewsContract.Presenter {
                 .doOnTerminate(() -> view.setLoading(false))
                 .compose(RxUtils.hideType());
     }
-
 }

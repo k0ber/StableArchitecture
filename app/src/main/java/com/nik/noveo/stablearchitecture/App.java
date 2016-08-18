@@ -11,6 +11,7 @@ import com.nik.noveo.stablearchitecture.news.mvvi.di.DaggerApplicationComponentM
 
 
 public class App extends Application {
+
     private ApplicationComponentMVVI applicationComponentMVVI;
 
     @Override

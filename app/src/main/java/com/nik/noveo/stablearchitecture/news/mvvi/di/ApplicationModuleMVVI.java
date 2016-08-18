@@ -14,11 +14,8 @@ class ApplicationModuleMVVI {
         return new NewsRepository();
     }
 
-
-
     @Provides
     NewsViewModel provideNewsViewModel(NewsRepository newsRepository) {
         return new NewsViewModel(newsRepository);
     }
-
 }

@@ -9,9 +9,7 @@ import javax.inject.Inject;
 
 public class NewsActivityMVVM extends NewsActivity {
 
-    @Inject
-    NewsViewModel newsViewModel;
-
+    @Inject NewsViewModel newsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

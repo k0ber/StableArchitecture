@@ -11,6 +11,5 @@ import dagger.Component;
 public interface ApplicationComponentMVVI {
 
     void inject(NewsActivityMVVM newsActivityMVVM);
-
 }
 

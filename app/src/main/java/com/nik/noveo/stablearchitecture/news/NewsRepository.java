@@ -15,5 +15,4 @@ public class NewsRepository {
                 .map(aLong -> "Breaking news! Count of victims increased to " + new Random().nextInt(1000))
                 .compose(RxUtils.setSchedulers());
     }
-
 }

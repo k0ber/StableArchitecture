@@ -10,15 +10,12 @@ import rx.subjects.BehaviorSubject;
 
 public class NewsViewModel {
 
-    @Inject
-    NewsRepository newsRepository;
-
+    @Inject NewsRepository newsRepository;
 
     @Inject
     public NewsViewModel(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
     }
-
 
     //region ViewModel
     private BehaviorSubject<String> postSubject = BehaviorSubject.create("Nothing to show");
@@ -32,7 +29,6 @@ public class NewsViewModel {
         return loadingSubject.asObservable();
     }
     //endregion
-
 
     //region Business Logic
     Observable<Void> loadNews() {
@@ -48,5 +44,4 @@ public class NewsViewModel {
                 .compose(RxUtils.hideType());
     }
     //endregion
-
 }

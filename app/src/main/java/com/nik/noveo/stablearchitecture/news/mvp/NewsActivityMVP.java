@@ -10,8 +10,7 @@ import javax.inject.Inject;
 
 public class NewsActivityMVP extends NewsActivity implements NewsContract.View {
 
-    @Inject
-    NewsContract.Presenter presenter;
+    @Inject NewsContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,15 +16,11 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class NewsActivity extends AppCompatActivity {
 
-    @BindView(R.id.tv_news)
-    public TextView newsText;
-    @BindView(R.id.progress_bar)
-    public View progressBar;
-    @BindView(R.id.toolbar)
-    public Toolbar toolbar;
+    @BindView(R.id.tv_news) public TextView newsText;
+    @BindView(R.id.progress_bar) public View progressBar;
+    @BindView(R.id.toolbar) public Toolbar toolbar;
 
     protected CompositeSubscription subscriptions;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,5 +57,4 @@ public abstract class NewsActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab_load)
     abstract public void loadClicked();
-
 }

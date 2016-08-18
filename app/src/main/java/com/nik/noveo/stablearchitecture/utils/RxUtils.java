@@ -14,7 +14,6 @@ public class RxUtils {
 
     public static <T> Observable.Transformer<T, Void> hideType() {
         return observable -> observable
-                .map(t -> (Void) null);
+                .map(t -> null);
     }
-
 }
