@@ -6,10 +6,12 @@ import com.nik.noveo.stablearchitecture.news.base.PresenterFactory;
 
 class NewsVMFactory implements PresenterFactory {
 
-    private static final NewsVMFactory INSTANCE = new NewsVMFactory();
+    private static class InstanceHolder {
+        static final NewsVMFactory INSTANCE = new NewsVMFactory();
+    }
 
     static NewsVMFactory getInstance() {
-        return INSTANCE;
+        return InstanceHolder.INSTANCE;
     }
 
     @Override
