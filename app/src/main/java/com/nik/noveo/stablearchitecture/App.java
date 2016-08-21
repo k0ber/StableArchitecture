@@ -6,8 +6,8 @@ import com.nik.noveo.stablearchitecture.news.mvp.NewsContract;
 import com.nik.noveo.stablearchitecture.news.mvp.di.ApplicationComponentMVP;
 import com.nik.noveo.stablearchitecture.news.mvp.di.DaggerApplicationComponentMVP;
 import com.nik.noveo.stablearchitecture.news.mvp.di.NewsPresenterModule;
-import com.nik.noveo.stablearchitecture.news.mvvi.di.ApplicationComponentMVVI;
-import com.nik.noveo.stablearchitecture.news.mvvi.di.DaggerApplicationComponentMVVI;
+import com.nik.noveo.stablearchitecture.news.mvvi.dagger.ApplicationComponentMVVI;
+import com.nik.noveo.stablearchitecture.news.mvvi.dagger.DaggerApplicationComponentMVVI;
 
 
 public class App extends Application {

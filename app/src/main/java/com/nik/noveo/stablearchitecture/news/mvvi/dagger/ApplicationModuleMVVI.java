@@ -1,7 +1,6 @@
-package com.nik.noveo.stablearchitecture.news.mvvi.di;
+package com.nik.noveo.stablearchitecture.news.mvvi.dagger;
 
 import com.nik.noveo.stablearchitecture.news.NewsRepository;
-import com.nik.noveo.stablearchitecture.news.mvvi.NewsViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,7 +14,7 @@ class ApplicationModuleMVVI {
     }
 
     @Provides
-    NewsViewModel provideNewsViewModel(NewsRepository newsRepository) {
-        return new NewsViewModel(newsRepository);
+    NewsVM provideNewsViewModel(NewsRepository newsRepository) {
+        return new NewsVM(newsRepository);
     }
 }

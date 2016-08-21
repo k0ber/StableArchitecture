@@ -1,4 +1,4 @@
-package com.nik.noveo.stablearchitecture.news.mvvi;
+package com.nik.noveo.stablearchitecture.news.mvvi.dagger;
 
 import android.os.Bundle;
 
@@ -7,9 +7,10 @@ import com.nik.noveo.stablearchitecture.news.NewsActivity;
 
 import javax.inject.Inject;
 
-public class NewsActivityMVVM extends NewsActivity {
+public class NewsActivityMVVMdi extends NewsActivity {
 
-    @Inject NewsViewModel newsViewModel;
+    @Inject
+    NewsVM newsVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +21,18 @@ public class NewsActivityMVVM extends NewsActivity {
 
     private void initBindings() {
         subscriptions.addAll(
-                newsViewModel.postsObservable().subscribe(this::setNewsText),
-                newsViewModel.loadingObservable().subscribe(this::setLoading)
+                newsVM.postsObservable().subscribe(this::setNewsText),
+                newsVM.loadingObservable().subscribe(this::setLoading)
         );
     }
 
     @Override
     public void loadClicked() {
-        subscriptions.add(newsViewModel.loadNews().subscribe());
+        newsVM.loadNews();
     }
 
+    @Override
+    protected void onFinish() {
+        newsVM.release();
+    }
 }

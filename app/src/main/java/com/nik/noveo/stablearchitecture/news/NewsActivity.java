@@ -20,6 +20,7 @@ public abstract class NewsActivity extends AppCompatActivity {
     @BindView(R.id.progress_bar) public View progressBar;
     @BindView(R.id.toolbar) public Toolbar toolbar;
 
+    private boolean willBeRecreated;
     protected CompositeSubscription subscriptions;
 
     @Override
@@ -30,15 +31,36 @@ public abstract class NewsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        willBeRecreated = false;
+        super.onStart();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         subscriptions.unsubscribe();
+        if (!willBeRecreated) {
+            onFinish();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        willBeRecreated = true;
     }
 
     private void initView() {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+    }
+
+    /**
+     * will be called when activity destroyed without recreation
+     */
+    protected void onFinish() {
     }
 
     public void setNewsText(String text) {

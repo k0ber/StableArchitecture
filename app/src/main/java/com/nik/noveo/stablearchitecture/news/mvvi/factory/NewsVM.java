@@ -1,19 +1,20 @@
-package com.nik.noveo.stablearchitecture.news.mvvi;
+package com.nik.noveo.stablearchitecture.news.mvvi.factory;
 
 import com.nik.noveo.stablearchitecture.news.NewsRepository;
+import com.nik.noveo.stablearchitecture.news.base.BasePresenter;
 import com.nik.noveo.stablearchitecture.utils.RxUtils;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
+import rx.subscriptions.CompositeSubscription;
 
-public class NewsViewModel {
+public class NewsVM implements BasePresenter {
 
-    @Inject NewsRepository newsRepository;
+    private NewsRepository newsRepository;
+    private CompositeSubscription subscriptions;
 
-    @Inject
-    public NewsViewModel(NewsRepository newsRepository) {
+    public NewsVM(NewsRepository newsRepository) {
+        this.subscriptions = new CompositeSubscription();
         this.newsRepository = newsRepository;
     }
 
@@ -31,17 +32,23 @@ public class NewsViewModel {
     //endregion
 
     //region Business Logic
-    Observable<Void> loadNews() {
+    void loadNews() {
         if (loadingSubject.getValue()) {
-            return Observable.empty();
+            return;
         }
 
         loadingSubject.onNext(true);
 
-        return newsRepository.getNews()
+        subscriptions.add(newsRepository.getNews()
                 .doOnNext(newsText -> postSubject.onNext(newsText))
                 .doOnTerminate(() -> loadingSubject.onNext(false))
-                .compose(RxUtils.hideType());
+                .compose(RxUtils.hideType())
+                .subscribe());
+    }
+
+    @Override
+    public void release() {
+        subscriptions.unsubscribe();
     }
     //endregion
 }
