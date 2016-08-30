@@ -12,13 +12,14 @@ import rx.subscriptions.CompositeSubscription;
 
 public class NewsVM implements BasePresenter {
 
-    @Inject
-    NewsRepository newsRepository;
+    @Inject NewsRepository newsRepository;
+
     private CompositeSubscription subscriptions;
 
     @Inject
     public NewsVM(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
+        subscriptions = new CompositeSubscription();
     }
 
     //region ViewModel
