@@ -5,10 +5,10 @@
 более простым и наглядным.
 
 Каждый вариант архитектуры находится в отдельной ветке.<br>
-####Состояние репозитория:
-  - mvvm-factory - готов
-  - mvvm-dagger2 - готов
-  - mvp-factory - необходимо добавить сохранение призентера
-  - mvp-dagger2 - необходимо добавить сохранение призентера
+####Repository state:
+  - mvvm-factory - done
+  - mvvm-dagger2 - done
+  - mvp-factory - done
+  - mvp-dagger2 - not survivable yet
 
 [googlesamples/android-architecture]: <https://github.com/googlesamples/android-architecture>
