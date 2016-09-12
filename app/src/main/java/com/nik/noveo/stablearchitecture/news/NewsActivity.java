@@ -1,82 +1,70 @@
 package com.nik.noveo.stablearchitecture.news;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
 import com.nik.noveo.stablearchitecture.R;
+import com.nik.noveo.stablearchitecture.base.BaseActivity;
+import com.nik.noveo.stablearchitecture.base.BasePresenter;
+import com.nik.noveo.stablearchitecture.base.PresenterFactory;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.subscriptions.CompositeSubscription;
 
-public abstract class NewsActivity extends AppCompatActivity {
+
+public class NewsActivity extends BaseActivity implements NewsContract.View {
 
     @BindView(R.id.tv_news) public TextView newsText;
     @BindView(R.id.progress_bar) public View progressBar;
     @BindView(R.id.toolbar) public Toolbar toolbar;
 
-    private boolean willBeRecreated;
-    protected CompositeSubscription subscriptions;
+    private NewsContract.Presenter presenter;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected PresenterFactory getPresenterFactory() {
+        return new PresenterFactory() {
+            @Override
+            public BasePresenter createPresenter() {
+                return new NewsPresenter(new NewsRepository());
+            }
+
+            @Override
+            public Class getPresenterClass() {
+                return NewsPresenter.class;
+            }
+        };
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
-        subscriptions = new CompositeSubscription();
-    }
-
-    @Override
-    protected void onStart() {
-        willBeRecreated = false;
-        super.onStart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        subscriptions.unsubscribe();
-        if (!willBeRecreated) {
-            onFinish();
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        willBeRecreated = true;
-    }
-
-    private void initView() {
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
     }
 
-    /**
-     * will be called when activity destroyed without recreation
-     */
-    protected void onFinish() {
+    @Override
+    public void setPresenter(BasePresenter presenter) {
+        this.presenter = (NewsContract.Presenter) presenter;
     }
 
-    public void setNewsText(String text) {
-        newsText.setText(text);
-    }
-
+    @Override
     public void setLoading(boolean isLoading) {
         progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void setNewsText(String text) {
+        newsText.setText(text);
     }
 
     @OnClick(R.id.fab_load)
-    abstract public void loadClicked();
+    void onLoadNewsClicked() {
+        presenter.loadNews();
+    }
 }

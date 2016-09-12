@@ -1,18 +1,15 @@
 package com.nik.noveo.stablearchitecture.news;
 
-import rx.Observable;
+import com.nik.noveo.stablearchitecture.base.BasePresenter;
+import com.nik.noveo.stablearchitecture.base.BaseView;
 
 public interface NewsContract {
 
-    interface Presenter {
-        void onViewAttached();
-
-        Observable<Void> loadNews();
+    interface Presenter extends BasePresenter {
+        void loadNews();
     }
 
-    interface View {
-        void setPresenter(Presenter presenter);
-
+    interface View extends BaseView {
         void setLoading(boolean isLoading);
 
         void setNewsText(String text);

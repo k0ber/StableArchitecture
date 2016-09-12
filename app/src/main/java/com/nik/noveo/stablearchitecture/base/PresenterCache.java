@@ -2,7 +2,7 @@ package com.nik.noveo.stablearchitecture.base;
 
 import android.support.v4.util.SimpleArrayMap;
 
-public class PresenterCache {
+class PresenterCache {
 
     private static SimpleArrayMap<Class, BasePresenter> presenters;
 
@@ -20,11 +20,11 @@ public class PresenterCache {
         return presenter;
     }
 
-    public static void remove(Class presenterClass) {
+    static void remove(Class presenterClass) {
         if (presenters != null) {
             BasePresenter removedPresenter = presenters.remove(presenterClass);
             if (removedPresenter != null) {
-                removedPresenter.release();
+                removedPresenter.onViewDied();
             }
         }
     }
