@@ -47,11 +47,13 @@ class NewsPresenter extends BasePresenter<NewsContract.View> implements NewsCont
 
     @Override
     public void loadNews() {
-        updateLoadingState(true);
-        subscriptions.add(newsRepository.getNews()
-                .doOnNext(this::updateNewsTextState)
-                .doOnTerminate(() -> updateLoadingState(false))
-                .subscribe());
+        if (!screenState.loading) {
+            updateLoadingState(true);
+            subscriptions.add(newsRepository.getNews()
+                    .doOnNext(this::updateNewsTextState)
+                    .doOnTerminate(() -> updateLoadingState(false))
+                    .subscribe());
+        }
     }
 
     private void updateLoadingState(boolean loading) {
