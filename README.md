@@ -1,7 +1,7 @@
 # Stable Architecture
 
-The goal of this project is to show main architecture approaches in Android developing. Unlike [googlesamples / android-architecture], 
-here we have provided examples with survivable business logic. It means, after view recreating, its state remains the same. 
+The goal of this project is to show main architecture approaches in Android developing. 
+Unlike [googlesamples/android-architecture], here we have provided examples with survivable business logic. It means, after view recreating, its state remains the same. 
 And the important requirement for this examples is as simple and as understandable as possible.
 
 ####Repository state:
