@@ -6,12 +6,11 @@ class PresenterCache {
 
     private static SimpleArrayMap<Class, BasePresenter> presenters;
 
-    public static BasePresenter get(PresenterFactory presenterFactory) {
+    static BasePresenter get(Class presenterClass, PresenterFactory presenterFactory) {
         if (presenters == null) {
             presenters = new SimpleArrayMap<>();
         }
 
-        Class presenterClass = presenterFactory.getPresenterClass();
         BasePresenter presenter = presenters.get(presenterClass);
         if (presenter == null) {
             presenter = presenterFactory.createPresenter();

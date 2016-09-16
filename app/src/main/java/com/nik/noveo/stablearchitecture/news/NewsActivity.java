@@ -7,20 +7,17 @@ import android.widget.TextView;
 
 import com.nik.noveo.stablearchitecture.R;
 import com.nik.noveo.stablearchitecture.base.BaseActivity;
-import com.nik.noveo.stablearchitecture.base.BasePresenter;
 import com.nik.noveo.stablearchitecture.base.PresenterFactory;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class NewsActivity extends BaseActivity implements NewsContract.View {
+public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsContract.View {
 
     @BindView(R.id.tv_news) public TextView newsText;
     @BindView(R.id.progress_bar) public View progressBar;
     @BindView(R.id.toolbar) public Toolbar toolbar;
-
-    private NewsContract.Presenter presenter;
 
     @Override
     protected int getLayoutId() {
@@ -28,29 +25,14 @@ public class NewsActivity extends BaseActivity implements NewsContract.View {
     }
 
     @Override
-    protected PresenterFactory getPresenterFactory() {
-        return new PresenterFactory() {
-            @Override
-            public BasePresenter createPresenter() {
-                return new NewsPresenter(new NewsRepository());
-            }
-
-            @Override
-            public Class getPresenterClass() {
-                return NewsPresenter.class;
-            }
-        };
+    protected PresenterFactory<NewsPresenter> getPresenterFactory() {
+        return () -> new NewsPresenter(new NewsRepository());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
-    }
-
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-        this.presenter = (NewsContract.Presenter) presenter;
     }
 
     @Override

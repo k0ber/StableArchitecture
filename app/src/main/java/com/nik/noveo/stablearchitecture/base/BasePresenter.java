@@ -1,7 +1,18 @@
 package com.nik.noveo.stablearchitecture.base;
 
-public interface BasePresenter {
-    void onViewReady(BaseView view);
+import java.lang.ref.WeakReference;
 
-    void onViewDied();
+public abstract class BasePresenter<V> {
+
+    protected WeakReference<V> viewReference;
+
+
+    void attachView(V view) {
+        viewReference = new WeakReference<>(view);
+        onViewAttached();
+    }
+
+    protected abstract void onViewAttached();
+
+    protected abstract void onViewDied();
 }

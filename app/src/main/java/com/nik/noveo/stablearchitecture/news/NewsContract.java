@@ -1,15 +1,13 @@
 package com.nik.noveo.stablearchitecture.news;
 
-import com.nik.noveo.stablearchitecture.base.BasePresenter;
-import com.nik.noveo.stablearchitecture.base.BaseView;
 
-public interface NewsContract {
+interface NewsContract {
 
-    interface Presenter extends BasePresenter {
+    interface Presenter {
         void loadNews();
     }
 
-    interface View extends BaseView {
+    interface View {
         void setLoading(boolean isLoading);
 
         void setNewsText(String text);

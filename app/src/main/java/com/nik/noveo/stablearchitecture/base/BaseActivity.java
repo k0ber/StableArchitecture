@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
+import java.lang.reflect.ParameterizedType;
+
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
 
     private boolean willBeRecreated;
 
@@ -15,17 +17,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @LayoutRes
     protected abstract int getLayoutId();
 
-    protected abstract PresenterFactory getPresenterFactory();
+    protected abstract PresenterFactory<P> getPresenterFactory();
+    protected P presenter;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
 
-        BasePresenter presenter = PresenterCache.get(getPresenterFactory());
-        setPresenter(presenter);
-        presenter.onViewReady(this);
+        Class pClass = ((Class)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+        presenter = (P) PresenterCache.get(pClass, getPresenterFactory());
+        presenter.attachView(this);
     }
 
     @Override
@@ -52,6 +56,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
      * will be called when activity destroyed without recreation
      */
     protected void onFinish() {
-        PresenterCache.remove(getPresenterFactory().getPresenterClass());
+        PresenterCache.remove(presenter.getClass());
     }
 }

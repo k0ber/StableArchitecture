@@ -1,7 +1,5 @@
 package com.nik.noveo.stablearchitecture.base;
 
-public interface PresenterFactory {
-    BasePresenter createPresenter();
-
-    Class getPresenterClass();
+public interface PresenterFactory<P extends BasePresenter> {
+    P createPresenter();
 }

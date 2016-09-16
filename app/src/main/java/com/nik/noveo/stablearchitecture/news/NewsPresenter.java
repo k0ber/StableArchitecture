@@ -1,17 +1,15 @@
 package com.nik.noveo.stablearchitecture.news;
 
 import com.nik.noveo.stablearchitecture.base.BasePresenter;
-import com.nik.noveo.stablearchitecture.base.BaseView;
 
 import rx.subscriptions.CompositeSubscription;
 
 
-public class NewsPresenter implements NewsContract.Presenter, BasePresenter {
+class NewsPresenter extends BasePresenter<NewsContract.View> implements NewsContract.Presenter {
 
     private NewsRepository newsRepository;
     private CompositeSubscription subscriptions;
 
-    private NewsContract.View view;
     private NewsScreenState screenState;
 
     private class NewsScreenState {
@@ -24,25 +22,26 @@ public class NewsPresenter implements NewsContract.Presenter, BasePresenter {
         }
     }
 
-    public NewsPresenter(NewsRepository newsRepository) {
+    NewsPresenter(NewsRepository newsRepository) {
         subscriptions = new CompositeSubscription();
         screenState = new NewsScreenState();
         this.newsRepository = newsRepository;
     }
 
     @Override
-    public void onViewReady(BaseView view) {
-        this.view = (NewsContract.View) view;
+    protected void onViewAttached() {
         updateViewState();
     }
 
     private void updateViewState() {
-        view.setLoading(screenState.loading);
-        view.setNewsText(screenState.newsText);
+        if (viewReference.get() != null) {
+            viewReference.get().setLoading(screenState.loading);
+            viewReference.get().setNewsText(screenState.newsText);
+        }
     }
 
     @Override
-    public void onViewDied() {
+    protected void onViewDied() {
         subscriptions.unsubscribe();
     }
 
@@ -57,15 +56,15 @@ public class NewsPresenter implements NewsContract.Presenter, BasePresenter {
 
     private void updateLoadingState(boolean loading) {
         screenState.loading = loading;
-        if (view != null) {
-            view.setLoading(loading);
+        if (viewReference.get() != null) {
+            viewReference.get().setLoading(loading);
         }
     }
 
     private void updateNewsTextState(String newsText) {
         screenState.newsText = newsText;
-        if (view != null) {
-            view.setNewsText(newsText);
+        if (viewReference.get() != null) {
+            viewReference.get().setNewsText(newsText);
         }
     }
 }
