@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion compileSdkVer
+    buildToolsVersion buildToolsVer
+
+    defaultConfig {
+        applicationId "com.nik.noveo.stablearchitecture"
+        minSdkVersion minSdkVer
+        targetSdkVersion targetSdkVer
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    // support
+    compile "com.android.support:appcompat-v7:$supportLibVer"
+    compile "com.android.support:design:$supportLibVer"
+
+    // dagger2
+    compile "com.google.dagger:dagger:$dagger2Ver"
+    apt "com.google.dagger:dagger-compiler:$dagger2Ver"
+
+    // butterknife
+    compile "com.jakewharton:butterknife:$butterKnifeVer"
+    apt "com.jakewharton:butterknife-compiler:$butterKnifeVer"
+
+    // rxJava
+    compile "io.reactivex:rxjava:$rxJavaVer"
+    compile "io.reactivex:rxandroid:$rxAndroidVer"
+}

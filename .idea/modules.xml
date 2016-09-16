@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/StableArchitecture.iml" filepath="$PROJECT_DIR$/StableArchitecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvp_dagger2/mvp_dagger2.iml" filepath="$PROJECT_DIR$/mvp_dagger2/mvp_dagger2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvp_factory/mvp_factory.iml" filepath="$PROJECT_DIR$/mvp_factory/mvp_factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvvm_dagger2/mvvm_dagger2.iml" filepath="$PROJECT_DIR$/mvvm_dagger2/mvvm_dagger2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvvm_factory/mvvm_factory.iml" filepath="$PROJECT_DIR$/mvvm_factory/mvvm_factory.iml" />
+    </modules>
+  </component>
+</project>

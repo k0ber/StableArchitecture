@@ -1,0 +1,1 @@
+include ':mvp_dagger2', ':mvp_factory', ':mvvm_dagger2', ':mvvm_factory'
