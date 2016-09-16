@@ -4,29 +4,31 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
-import butterknife.ButterKnife;
-import rx.subscriptions.CompositeSubscription;
+import java.lang.reflect.ParameterizedType;
 
-public abstract class BaseActivity extends AppCompatActivity {
+import butterknife.ButterKnife;
+
+
+public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivity {
 
     private boolean willBeRecreated;
-    protected CompositeSubscription subscriptions;
+    protected VM viewModel;
+
 
     @LayoutRes
     protected abstract int getLayoutId();
 
-    protected abstract PresenterFactory getPresenterFactory();
+    protected abstract ViewModelFactory<VM> getViewModelFactory();
 
-    protected abstract void onPresenterCreated(BasePresenter presenter);
-
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        subscriptions = new CompositeSubscription();
         ButterKnife.bind(this);
 
-        onPresenterCreated(PresenterCache.get(getPresenterFactory()));
+        Class vmClass = ((Class)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+        viewModel = (VM) ViewModelCache.get(vmClass, getViewModelFactory());
     }
 
     @Override
@@ -38,7 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        subscriptions.unsubscribe();
         if (!willBeRecreated) {
             onFinish();
         }
@@ -54,6 +55,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * will be called when activity destroyed without recreation
      */
     protected void onFinish() {
-        PresenterCache.remove(getPresenterFactory().getPresenterClass());
+        ViewModelCache.remove(viewModel.getClass());
     }
 }

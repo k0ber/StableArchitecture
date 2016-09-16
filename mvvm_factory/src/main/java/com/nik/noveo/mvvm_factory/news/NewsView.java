@@ -7,20 +7,20 @@ import android.widget.TextView;
 
 import com.nik.noveo.mvvm_factory.R;
 import com.nik.noveo.mvvm_factory.base.BaseActivity;
-import com.nik.noveo.mvvm_factory.base.BasePresenter;
-import com.nik.noveo.mvvm_factory.base.PresenterFactory;
+import com.nik.noveo.mvvm_factory.base.ViewModelFactory;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.subscriptions.CompositeSubscription;
 
 
-public class NewsView extends BaseActivity {
+public class NewsView extends BaseActivity<NewsViewModel> {
 
     @BindView(R.id.tv_news) public TextView newsText;
     @BindView(R.id.progress_bar) public View progressBar;
     @BindView(R.id.toolbar) public Toolbar toolbar;
 
-    private NewsViewModel newsViewModel;
+    private CompositeSubscription viewStateSubscriptions;
 
     @Override
     protected int getLayoutId() {
@@ -28,36 +28,28 @@ public class NewsView extends BaseActivity {
     }
 
     @Override
-    protected PresenterFactory getPresenterFactory() {
-        return new PresenterFactory() {
-            @Override
-            public BasePresenter createPresenter() {
-                return new NewsViewModel(new NewsRepository());
-            }
-
-            @Override
-            public Class getPresenterClass() {
-                return NewsViewModel.class;
-            }
-        };
-    }
-
-    @Override
-    protected void onPresenterCreated(BasePresenter presenter) {
-        newsViewModel = (NewsViewModel) presenter;
+    protected ViewModelFactory<NewsViewModel> getViewModelFactory() {
+        return () -> new NewsViewModel(new NewsRepository());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
+        viewStateSubscriptions = new CompositeSubscription();
         initBindings();
     }
 
+    @Override
+    protected void onDestroy() {
+        viewStateSubscriptions.clear();
+        super.onDestroy();
+    }
+
     private void initBindings() {
-        subscriptions.addAll(
-                newsViewModel.postsObservable().subscribe(this::setNewsText),
-                newsViewModel.loadingObservable().subscribe(this::setLoading)
+        viewStateSubscriptions.addAll(
+                viewModel.postsObservable().subscribe(this::setNewsText),
+                viewModel.loadingObservable().subscribe(this::setLoading)
         );
     }
 
@@ -71,6 +63,6 @@ public class NewsView extends BaseActivity {
 
     @OnClick(R.id.fab_load)
     public void loadClicked() {
-        newsViewModel.loadNews();
+        viewModel.loadNews();
     }
 }

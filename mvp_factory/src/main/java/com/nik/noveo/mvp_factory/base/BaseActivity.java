@@ -12,13 +12,13 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
 
     private boolean willBeRecreated;
+    protected P presenter;
 
 
     @LayoutRes
     protected abstract int getLayoutId();
 
     protected abstract PresenterFactory<P> getPresenterFactory();
-    protected P presenter;
 
     @SuppressWarnings("unchecked")
     @Override

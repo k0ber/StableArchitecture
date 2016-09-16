@@ -1,13 +1,12 @@
 package com.nik.noveo.mvvm_factory.news;
 
-import com.nik.noveo.mvvm_factory.base.BasePresenter;
-import com.nik.noveo.mvvm_factory.utils.RxUtils;
+import com.nik.noveo.mvvm_factory.base.ViewModel;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 
-class NewsViewModel implements BasePresenter {
+class NewsViewModel extends ViewModel {
 
     private NewsRepository newsRepository;
     private CompositeSubscription subscriptions;
@@ -32,20 +31,17 @@ class NewsViewModel implements BasePresenter {
 
     //region Business Logic
     void loadNews() {
-        if (loadingSubject.getValue()) {
-            return;
+        if (!loadingSubject.getValue()) {
+            loadingSubject.onNext(true);
+            subscriptions.add(newsRepository.getNews()
+                    .doOnNext(newsText -> postSubject.onNext(newsText))
+                    .doOnTerminate(() -> loadingSubject.onNext(false))
+                    .subscribe());
         }
-
-        loadingSubject.onNext(true);
-
-        subscriptions.add(newsRepository.getNews()
-                .doOnNext(newsText -> postSubject.onNext(newsText))
-                .doOnTerminate(() -> loadingSubject.onNext(false))
-                .subscribe());
     }
 
     @Override
-    public void release() {
+    protected void onViewDied() {
         subscriptions.unsubscribe();
     }
     //endregion
