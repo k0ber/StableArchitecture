@@ -5,8 +5,8 @@ Unlike [googlesamples/android-architecture], here we have provided examples with
 And the important requirement for this examples is as simple and as understandable as possible.
 
 ####Repository state:
-  - mvvm-factory - survivable, can be improved
-  - mvvm-dagger2 - survivable, can be improved
+  - mvvm-factory - survivable, satisfactory
+  - mvvm-dagger2 - survivable, needs improvment
   - mvp-factory - survivable, satisfactory
   - mvp-dagger2 - not survivable yet
 
