@@ -10,4 +10,5 @@ And the important requirement for this examples is as simple and as understandab
   - mvp-factory - survivable, satisfactory
   - mvp-dagger2 - not survivable yet
 
+Looking for improvements for Dagger2 Subcomponents workflow
 [googlesamples/android-architecture]: <https://github.com/googlesamples/android-architecture>
