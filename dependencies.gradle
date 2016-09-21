@@ -12,7 +12,7 @@ ext {
 
 
     supportLibVer = "24.2.1"
-    dagger2Ver = "2.5"
+    dagger2Ver = "2.7"
     butterKnifeVer = "8.2.1"
     rxJavaVer = "1.1.8"
     rxAndroidVer = "1.2.1"
