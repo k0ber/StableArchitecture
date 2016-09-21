@@ -12,13 +12,13 @@ public class NewsVMModule {
 
     @Provides
     @NewsScope
-    NewsRepository provideNewsRepository() {
+    static NewsRepository provideNewsRepository() {
         return new NewsRepository();
     }
 
     @Provides
     @NewsScope
-    NewsViewModel provideNewsViewModel(NewsRepository newsRepository) {
+    static NewsViewModel provideNewsViewModel(NewsRepository newsRepository) {
         return new NewsViewModel(newsRepository);
     }
 }
