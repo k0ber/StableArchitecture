@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewsView extends BaseActivity {
+public class NewsActivityView extends BaseActivity {
 
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.tv_news) TextView newsText;

@@ -2,7 +2,7 @@ package com.nik.noveo.mvvm_dagger2.di;
 
 
 
-import com.nik.noveo.mvvm_dagger2.news.NewsView;
+import com.nik.noveo.mvvm_dagger2.news.NewsActivityView;
 
 import dagger.Subcomponent;
 
@@ -10,6 +10,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = NewsVMModule.class)
 public interface NewsComponent {
 
-    void inject(NewsView newsActivityView);
+    void inject(NewsActivityView newsActivityView);
 }
 
