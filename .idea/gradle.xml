@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/mvp_dagger2" />
             <option value="$PROJECT_DIR$/mvp_factory" />
+            <option value="$PROJECT_DIR$/mvp_retain_fragment" />
             <option value="$PROJECT_DIR$/mvvm_dagger2" />
             <option value="$PROJECT_DIR$/mvvm_factory" />
           </set>
