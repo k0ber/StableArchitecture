@@ -9,7 +9,5 @@ import dagger.Subcomponent;
 @NewsScope
 @Subcomponent(modules = NewsVMModule.class)
 public interface NewsComponent {
-
     void inject(NewsActivityView newsActivityView);
 }
-
