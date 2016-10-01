@@ -1,45 +1,72 @@
 package com.nik.noveo.mvp_dagger2.news;
 
 
+import com.nik.noveo.mvp_dagger2.base.BasePresenter;
 import com.nik.noveo.mvp_dagger2.utils.RxUtils;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import rx.subscriptions.CompositeSubscription;
 
-public class NewsPresenter implements NewsContract.Presenter {
+public class NewsPresenter extends BasePresenter<NewsContract.View> implements NewsContract.Presenter {
 
     private NewsRepository newsRepository;
-    private NewsContract.View view;
+    private CompositeSubscription subscriptions;
+    private NewsState state;
 
     @Inject
-    public NewsPresenter(NewsRepository newsRepository, NewsContract.View view) {
+    public NewsPresenter(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
-        this.view = view;
+        this.subscriptions = new CompositeSubscription();
+        this.state = new NewsState();
     }
 
-    /**
-     * Method injection is used here to safely reference {@code this} after the object is created.
-     * For more information, see Java Concurrency in Practice.
-     */
-    @Inject
-    void setupListeners() {
-        view.setPresenter(this);
+    private class NewsState {
+        String text;
+        boolean loading;
+
+        NewsState() {
+            text = "Nothing to show";
+            loading = false;
+        }
     }
 
     @Override
     public void onViewAttached() {
-        view.setLoading(false);
-        view.setNewsText("Nothing to show");
+        if (viewReference.get() != null) {
+            viewReference.get().setLoading(state.loading);
+            viewReference.get().setNewsText(state.text);
+        }
     }
 
     @Override
-    public Observable<Void> loadNews() {
-        view.setLoading(true);
+    public void loadNews() {
+        if (!state.loading) {
+            changeLoading(true);
+            subscriptions.add(newsRepository.getNews()
+                    .doOnNext(this::updateText)
+                    .doOnTerminate(() -> changeLoading(false))
+                    .compose(RxUtils.hideType())
+                    .subscribe());
+        }
+    }
 
-        return newsRepository.getNews()
-                .doOnNext(s -> view.setNewsText(s))
-                .doOnTerminate(() -> view.setLoading(false))
-                .compose(RxUtils.hideType());
+    @Override
+    protected void onViewDied() {
+        subscriptions.unsubscribe();
+    }
+
+    private void updateText(String text) {
+        state.text = text;
+        if (viewReference.get() != null) {
+            viewReference.get().setNewsText(text);
+        }
+    }
+
+    private void changeLoading(boolean isLoading) {
+        state.loading = isLoading;
+        if (viewReference.get() != null) {
+            viewReference.get().setLoading(isLoading);
+        }
     }
 }
