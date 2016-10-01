@@ -13,7 +13,6 @@ public class NewsViewModel {
     private NewsRepository newsRepository;
     private CompositeSubscription subscriptions;
 
-
     @Inject
     public NewsViewModel(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;

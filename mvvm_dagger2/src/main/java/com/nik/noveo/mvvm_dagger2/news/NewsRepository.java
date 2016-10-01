@@ -1,7 +1,5 @@
 package com.nik.noveo.mvvm_dagger2.news;
 
-
-
 import com.nik.noveo.mvvm_dagger2.utils.RxUtils;
 
 import java.util.Random;

@@ -1,7 +1,5 @@
 package com.nik.noveo.mvvm_dagger2.di;
 
-
-
 import com.nik.noveo.mvvm_dagger2.news.NewsActivityView;
 
 import dagger.Subcomponent;
