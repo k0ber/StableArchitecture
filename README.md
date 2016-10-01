@@ -4,11 +4,10 @@ The goal of this project is to show main architecture approaches in Android deve
 Unlike [googlesamples/android-architecture], here we have provided examples with survivable business logic. It means, after view recreating, its state remains the same. 
 And the important requirement for this examples is as simple and as understandable as possible.
 
-####Repository state:
-  - mvvm-factory - survivable, satisfactory
-  - mvvm-dagger2 - survivable, needs improvment
-  - mvp-factory - survivable, satisfactory
-  - mvp-dagger2 - not survivable yet
+####Implemented ways to save state:
+  - Factory - singleton map that manages presenters
+  - Dagger2 - manage presenter lifecycle with custom scopes
+  - RetainFragment - fragment, which associated with another and affected by method setRetainInstance(true), keeps presenter.
 
 Looking for improvements for Dagger2 Subcomponents workflow
 [googlesamples/android-architecture]: <https://github.com/googlesamples/android-architecture>
