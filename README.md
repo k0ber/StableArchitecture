@@ -7,7 +7,7 @@ And the important requirement for this examples is as simple and as understandab
 ####Implemented ways to save state:
   - Factory - singleton map that manages presenters
   - Dagger2 - manage presenter lifecycle with custom scopes
-  - RetainFragment - fragment, which associated with another and affected by method setRetainInstance(true), keeps presenter.
+  - RetainFragment - fragment, which associated with another and affected by method setRetainInstance(true)
 
 Looking for improvements for Dagger2 Subcomponents workflow
 [googlesamples/android-architecture]: <https://github.com/googlesamples/android-architecture>
