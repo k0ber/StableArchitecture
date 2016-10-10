@@ -1,5 +1,6 @@
 package com.nik.noveo.mvvm_dagger2.news;
 
+import com.nik.noveo.mvvm_dagger2.base.ViewModel;
 import com.nik.noveo.mvvm_dagger2.utils.RxUtils;
 
 import javax.inject.Inject;
@@ -8,7 +9,7 @@ import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 
-public class NewsViewModel {
+public class NewsViewModel implements ViewModel{
 
     private NewsRepository newsRepository;
     private CompositeSubscription subscriptions;
@@ -19,7 +20,6 @@ public class NewsViewModel {
         subscriptions = new CompositeSubscription();
     }
 
-    //region ViewModel
     private BehaviorSubject<String> postSubject = BehaviorSubject.create("Nothing to show");
     private BehaviorSubject<Boolean> loadingSubject = BehaviorSubject.create(false);
 
@@ -30,9 +30,8 @@ public class NewsViewModel {
     Observable<Boolean> loadingObservable() {
         return loadingSubject.asObservable();
     }
-    //endregion
 
-    //region Business Logic
+    // busyness logic
     void loadNews() {
         if (loadingSubject.getValue()) {
             return;
@@ -47,8 +46,8 @@ public class NewsViewModel {
                 .subscribe());
     }
 
-    void release() {
+    @Override
+    public void release() {
         subscriptions.unsubscribe();
     }
-    //endregion
 }

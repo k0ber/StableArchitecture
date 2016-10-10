@@ -1,29 +1,22 @@
-package com.nik.noveo.mvvm_dagger2;
+package com.nik.noveo.mvvm_dagger2.base;
 
-import android.app.Application;
-
+import com.nik.noveo.mvvm_dagger2.ComponentInjector;
 import com.nik.noveo.mvvm_dagger2.di.AppComponent;
 import com.nik.noveo.mvvm_dagger2.di.DaggerAppComponent;
 import com.nik.noveo.mvvm_dagger2.di.NewsComponent;
 import com.nik.noveo.mvvm_dagger2.di.NewsVMModule;
+import com.nik.noveo.mvvm_dagger2.news.NewsActivityView;
+
+public class DiManager {
 
 
-public class App extends Application {
+    private static AppComponent appComponent = DaggerAppComponent.builder().build();
+    private static NewsComponent newsComponent;
 
-    private static volatile App appInstance;
 
-    private AppComponent appComponent;
-    private NewsComponent newsComponent;
-
-    public static App get() {
-        return appInstance;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        appInstance = this;
-        appComponent = DaggerAppComponent.builder().build();
+    public static ComponentInjector getInjector(Class injectorClass) {
+        newsComponent = appComponent.plus(new NewsVMModule());
+        return newsComponent;
     }
 
     public NewsComponent createNewsComponent() {
@@ -38,4 +31,6 @@ public class App extends Application {
     public NewsComponent getNewsComponent() {
         return newsComponent;
     }
+
+
 }

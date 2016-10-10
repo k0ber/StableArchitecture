@@ -17,13 +17,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewsActivityView extends BaseActivity {
+public class NewsActivityView extends BaseActivity<NewsComponent, NewsViewModel> {
 
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.tv_news) TextView newsText;
     @BindView(R.id.toolbar) public Toolbar toolbar;
-
-    @Inject NewsViewModel newsViewModel;
 
 
     @Override
@@ -33,8 +31,8 @@ public class NewsActivityView extends BaseActivity {
 
     @Override
     protected void onFinish() {
-        newsViewModel.release();
-        App.get().releaseNewsComponent();
+//        newsViewModel.release(); // todo ?!
+//        App.get().releaseNewsComponent();
     }
 
     @Override
@@ -42,19 +40,19 @@ public class NewsActivityView extends BaseActivity {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
 
-        NewsComponent component = App.get().getNewsComponent();
-        if (component == null) {
-            component = App.get().createNewsComponent();
-        }
-        component.inject(this);
+//        NewsComponent component = App.get().getNewsComponent();
+//        if (component == null) {
+//            component = App.get().createNewsComponent();
+//        }
+//        component.inject(this);
 
         initBindings();
     }
 
     private void initBindings() {
         subscriptions.addAll(
-                newsViewModel.postsObservable().subscribe(this::setNewsText),
-                newsViewModel.loadingObservable().subscribe(this::setLoading)
+                viewModel.postsObservable().subscribe(this::setNewsText),
+                viewModel.loadingObservable().subscribe(this::setLoading)
         );
     }
 
@@ -68,6 +66,6 @@ public class NewsActivityView extends BaseActivity {
 
     @OnClick(R.id.fab_load)
     public void loadClicked() {
-        newsViewModel.loadNews();
+        viewModel.loadNews();
     }
 }
