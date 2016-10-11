@@ -1,36 +1,23 @@
 package com.nik.noveo.mvvm_dagger2.base;
 
-import com.nik.noveo.mvvm_dagger2.ComponentInjector;
-import com.nik.noveo.mvvm_dagger2.di.AppComponent;
-import com.nik.noveo.mvvm_dagger2.di.DaggerAppComponent;
-import com.nik.noveo.mvvm_dagger2.di.NewsComponent;
-import com.nik.noveo.mvvm_dagger2.di.NewsVMModule;
-import com.nik.noveo.mvvm_dagger2.news.NewsActivityView;
+import java.util.HashMap;
 
-public class DiManager {
+class DiManager {
 
-
+    private static HashMap<Class, ComponentInjector> injectorProviders = new HashMap<>();
     private static AppComponent appComponent = DaggerAppComponent.builder().build();
-    private static NewsComponent newsComponent;
 
 
-    public static ComponentInjector getInjector(Class injectorClass) {
-        newsComponent = appComponent.plus(new NewsVMModule());
-        return newsComponent;
+    static void makeInjection(ComponentCreator creator, Class injectorClass, Object injectable) {
+        ComponentInjector componentInjector = injectorProviders.get(injectorClass);
+        if (componentInjector == null) {
+            ComponentInjector injector = creator.create(appComponent);
+            injectorProviders.put(injector.getClass(), injector);
+        }
+        componentInjector.inject(injectable);
     }
 
-    public NewsComponent createNewsComponent() {
-        newsComponent = appComponent.plus(new NewsVMModule());
-        return newsComponent;
+    static void release(Class componentInjectorClass) {
+        injectorProviders.remove(componentInjectorClass);
     }
-
-    public void releaseNewsComponent() {
-        newsComponent = null;
-    }
-
-    public NewsComponent getNewsComponent() {
-        return newsComponent;
-    }
-
-
 }

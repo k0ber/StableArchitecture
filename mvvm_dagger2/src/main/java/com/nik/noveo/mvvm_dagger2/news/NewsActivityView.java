@@ -6,13 +6,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
-import com.nik.noveo.mvvm_dagger2.App;
-import com.nik.noveo.mvvm_dagger2.base.BaseActivity;
-import com.nik.noveo.mvvm_dagger2.di.NewsComponent;
 import com.nik.noveo.mvvm_dagger2.R;
-
-import javax.inject.Inject;
+import com.nik.noveo.mvvm_dagger2.base.BaseActivity;
+import com.nik.noveo.mvvm_dagger2.base.ComponentCreator;
+import com.nik.noveo.mvvm_dagger2.news.di.NewsComponent;
+import com.nik.noveo.mvvm_dagger2.news.di.NewsVMModule;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,27 +23,19 @@ public class NewsActivityView extends BaseActivity<NewsComponent, NewsViewModel>
 
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
+    protected ComponentCreator<NewsComponent> getComponentInjectorCreator() {
+        return appComponent -> appComponent.plus(new NewsVMModule());
     }
 
     @Override
-    protected void onFinish() {
-//        newsViewModel.release(); // todo ?!
-//        App.get().releaseNewsComponent();
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
-
-//        NewsComponent component = App.get().getNewsComponent();
-//        if (component == null) {
-//            component = App.get().createNewsComponent();
-//        }
-//        component.inject(this);
-
         initBindings();
     }
 

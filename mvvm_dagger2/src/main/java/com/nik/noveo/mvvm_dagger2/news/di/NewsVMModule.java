@@ -1,4 +1,4 @@
-package com.nik.noveo.mvvm_dagger2.di;
+package com.nik.noveo.mvvm_dagger2.news.di;
 
 
 import com.nik.noveo.mvvm_dagger2.news.NewsRepository;

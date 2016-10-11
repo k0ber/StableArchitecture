@@ -1,6 +1,6 @@
-package com.nik.noveo.mvvm_dagger2.di;
+package com.nik.noveo.mvvm_dagger2.news.di;
 
-import com.nik.noveo.mvvm_dagger2.ComponentInjector;
+import com.nik.noveo.mvvm_dagger2.base.ComponentInjector;
 import com.nik.noveo.mvvm_dagger2.news.NewsActivityView;
 
 import dagger.Subcomponent;

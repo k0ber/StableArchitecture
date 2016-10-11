@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
-import com.nik.noveo.mvvm_dagger2.ComponentInjector;
-
 import java.lang.reflect.ParameterizedType;
 
 import javax.inject.Inject;
@@ -31,10 +29,15 @@ public abstract class BaseActivity<CI extends ComponentInjector, VM extends View
         subscriptions = new CompositeSubscription();
         ButterKnife.bind(this);
 
-        Class injectorClass = ((Class) ((ParameterizedType) getClass().getGenericSuperclass())
-                .getActualTypeArguments()[0]);
-        DiManager.getInjector(injectorClass).inject(this);
+        DiManager.makeInjection(getComponentInjectorCreator(), getInjectorClass(), this);
     }
+
+    private Class getInjectorClass() {
+        return ((Class) ((ParameterizedType) getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0]);
+    }
+
+    protected abstract ComponentCreator<CI> getComponentInjectorCreator();
 
     @Override
     protected void onStart() {
@@ -60,5 +63,8 @@ public abstract class BaseActivity<CI extends ComponentInjector, VM extends View
     /**
      * will be called when activity destroyed without recreation
      */
-    protected abstract void onFinish();
+    protected void onFinish() {
+        viewModel.release();
+        DiManager.release(getInjectorClass());
+    }
 }
