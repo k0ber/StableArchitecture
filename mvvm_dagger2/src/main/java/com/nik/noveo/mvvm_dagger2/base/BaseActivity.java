@@ -13,7 +13,6 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseActivity<CI extends ComponentInjector, VM extends ViewModel> extends AppCompatActivity {
 
-    private boolean willBeRecreated;
     protected CompositeSubscription subscriptions;
 
     @Inject protected VM viewModel;
@@ -40,24 +39,12 @@ public abstract class BaseActivity<CI extends ComponentInjector, VM extends View
     protected abstract ComponentCreator<CI> getComponentInjectorCreator();
 
     @Override
-    protected void onStart() {
-        willBeRecreated = false;
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
-        super.onDestroy();
         subscriptions.unsubscribe();
-        if (!willBeRecreated) {
+        if (!isChangingConfigurations()) {
             onFinish();
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        willBeRecreated = true;
+        super.onDestroy();
     }
 
     /**

@@ -12,7 +12,6 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
 
-    private boolean willBeRecreated;
     protected CompositeSubscription subscriptions;
 
     @Inject protected P presenter;
@@ -37,24 +36,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    protected void onStart() {
-        willBeRecreated = false;
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
-        super.onDestroy();
         subscriptions.unsubscribe();
-        if (!willBeRecreated) {
+        if (!isChangingConfigurations()) {
             onFinish();
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        willBeRecreated = true;
+        super.onDestroy();
     }
 
     protected void onFinish() {

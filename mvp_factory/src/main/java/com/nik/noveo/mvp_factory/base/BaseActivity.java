@@ -11,7 +11,6 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
 
-    private boolean willBeRecreated;
     protected P presenter;
 
 
@@ -27,29 +26,17 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(getLayoutId());
         ButterKnife.bind(this);
 
-        Class pClass = ((Class)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+        Class pClass = ((Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
         presenter = (P) PresenterCache.get(pClass, getPresenterFactory());
         presenter.attachView(this);
     }
 
     @Override
-    protected void onStart() {
-        willBeRecreated = false;
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if (!willBeRecreated) {
+        if (!isChangingConfigurations()) {
             onFinish();
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        willBeRecreated = true;
+        super.onDestroy();
     }
 
     /**

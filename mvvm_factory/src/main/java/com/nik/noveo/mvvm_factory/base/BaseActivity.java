@@ -11,7 +11,6 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivity {
 
-    private boolean willBeRecreated;
     protected VM viewModel;
 
 
@@ -27,28 +26,16 @@ public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivi
         setContentView(getLayoutId());
         ButterKnife.bind(this);
 
-        Class vmClass = ((Class)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+        Class vmClass = ((Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
         viewModel = (VM) ViewModelCache.get(vmClass, getViewModelFactory());
     }
 
     @Override
-    protected void onStart() {
-        willBeRecreated = false;
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if (!willBeRecreated) {
+        if (!isChangingConfigurations()) {
             onFinish();
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        willBeRecreated = true;
+        super.onDestroy();
     }
 
     /**
