@@ -8,13 +8,13 @@ class DiManager {
     private static AppComponent appComponent = DaggerAppComponent.builder().build();
 
 
-    static void makeInjection(ComponentCreator creator, Class injectorClass, Object injectable) {
+    static void makeInjection(ComponentCreator creator, Class injectorClass, Object target) {
         ComponentInjector componentInjector = injectorProviders.get(injectorClass);
         if (componentInjector == null) {
             componentInjector = creator.create(appComponent);
             injectorProviders.put(componentInjector.getClass(), componentInjector);
         }
-        componentInjector.inject(injectable);
+        componentInjector.inject(target);
     }
 
     static void release(Class componentInjectorClass) {
