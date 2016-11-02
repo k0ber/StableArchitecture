@@ -23,11 +23,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         appInstance = this;
-        appComponent = DaggerAppComponent.builder().build();
+        appComponent = DaggerAppComponent.create();
     }
 
     public NewsComponent createNewsComponent() {
-        newsComponent = appComponent.plus(new NewsModule());
+        newsComponent = appComponent.plus();
         return newsComponent;
     }
 
