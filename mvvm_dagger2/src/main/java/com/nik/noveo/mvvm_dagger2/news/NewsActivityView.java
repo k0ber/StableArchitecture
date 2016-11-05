@@ -7,25 +7,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nik.noveo.mvvm_dagger2.R;
-import com.nik.noveo.mvvm_dagger2.base.BaseActivity;
-import com.nik.noveo.mvvm_dagger2.base.ComponentCreator;
-import com.nik.noveo.mvvm_dagger2.news.di.NewsComponent;
-import com.nik.noveo.mvvm_dagger2.news.di.NewsVMModule;
+import com.nik.noveo.mvvm_dagger2.base.framework.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewsActivityView extends BaseActivity<NewsComponent, NewsViewModel> {
+public class NewsActivityView extends BaseActivity<NewsViewModel> {
 
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.tv_news) TextView newsText;
     @BindView(R.id.toolbar) public Toolbar toolbar;
 
-
-    @Override
-    protected ComponentCreator<NewsComponent> getComponentInjectorCreator() {
-        return appComponent -> appComponent.plus(new NewsVMModule());
-    }
 
     @Override
     protected int getLayoutId() {

@@ -1,9 +1,7 @@
 package com.nik.noveo.mvvm_dagger2.news;
 
-import com.nik.noveo.mvvm_dagger2.base.ViewModel;
+import com.nik.noveo.mvvm_dagger2.base.framework.ViewModel;
 import com.nik.noveo.mvvm_dagger2.utils.RxUtils;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -14,7 +12,6 @@ public class NewsViewModel implements ViewModel{
     private NewsRepository newsRepository;
     private CompositeSubscription subscriptions;
 
-    @Inject
     public NewsViewModel(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
         subscriptions = new CompositeSubscription();
@@ -31,7 +28,7 @@ public class NewsViewModel implements ViewModel{
         return loadingSubject.asObservable();
     }
 
-    // busyness logic
+
     void loadNews() {
         if (loadingSubject.getValue()) {
             return;
