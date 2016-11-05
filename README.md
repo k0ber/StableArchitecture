@@ -9,5 +9,4 @@ And the important requirement for this examples is as simple and as understandab
   - Dagger2 - manage presenter lifecycle with custom scopes
   - RetainFragment - fragment, which associated with another and affected by method setRetainInstance(true)
 
-Looking for improvements for Dagger2 Subcomponents workflow
 [googlesamples/android-architecture]: <https://github.com/googlesamples/android-architecture>
