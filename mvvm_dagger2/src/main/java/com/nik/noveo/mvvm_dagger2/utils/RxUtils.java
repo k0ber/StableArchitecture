@@ -12,8 +12,4 @@ public class RxUtils {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static <T> Observable.Transformer<T, Void> hideType() {
-        return observable -> observable
-                .map(t -> null);
-    }
 }

@@ -39,7 +39,6 @@ public class NewsViewModel implements ViewModel{
         subscriptions.add(newsRepository.getNews()
                 .doOnNext(newsText -> postSubject.onNext(newsText))
                 .doOnTerminate(() -> loadingSubject.onNext(false))
-                .compose(RxUtils.hideType())
                 .subscribe());
     }
 

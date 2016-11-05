@@ -17,7 +17,7 @@ abstract class RootModule {
 
     @Binds
     @IntoMap
-    @ActivityKey(NewsActivityView.class)
+    @ViewKey(NewsActivityView.class)
     public abstract ComponentBuilder newsActivityComponentBuilder(NewsComponent.Builder impl);
 
     // AnotherComponentBuilder Binding
