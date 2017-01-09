@@ -1,6 +1,6 @@
 ext {
 
-    androidPluginVer = "2.2.2"
+    androidPluginVer = "2.2.3"
     retrolambdaPluginVer = "3.2.5"
     daggerPluginVer = "1.8"
 
