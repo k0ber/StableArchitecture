@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StableArchitecture.iml" filepath="$PROJECT_DIR$/StableArchitecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moxy/moxy.iml" filepath="$PROJECT_DIR$/moxy/moxy.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp_dagger2/mvp_dagger2.iml" filepath="$PROJECT_DIR$/mvp_dagger2/mvp_dagger2.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp_factory/mvp_factory.iml" filepath="$PROJECT_DIR$/mvp_factory/mvp_factory.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp_retain_fragment/mvp_retain_fragment.iml" filepath="$PROJECT_DIR$/mvp_retain_fragment/mvp_retain_fragment.iml" />
