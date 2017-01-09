@@ -5,13 +5,13 @@ ext {
     daggerPluginVer = "1.8"
 
 
-    compileSdkVer = 24
-    buildToolsVer = "24.0.2"
+    compileSdkVer = 25
+    buildToolsVer = "25.0.2"
     minSdkVer = 14
-    targetSdkVer = 24
+    targetSdkVer = 25
 
 
-    supportLibVer = "24.2.1"
+    supportLibVer = "25.1.0"
     dagger2Ver = "2.7"
     butterKnifeVer = "8.2.1"
     rxJavaVer = "1.1.8"
