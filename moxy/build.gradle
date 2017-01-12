@@ -44,6 +44,10 @@ dependencies {
     compile "io.reactivex:rxandroid:$rxAndroidVer"
 
     // moxy
-    compile 'com.arello-mobile:moxy:1.4.3'
-    compile 'com.arello-mobile:moxy-app-compat:1.4.3'
+    compile 'com.arello-mobile:moxy:1.4.4'
+    compile 'com.arello-mobile:moxy-android:1.4.4'
+    compile 'com.arello-mobile:moxy-app-compat:1.4.4'
+    provided 'com.arello-mobile:moxy-compiler:1.4.4'
+    annotationProcessor 'com.arello-mobile:moxy-compiler:1.4.4'
+
 }
