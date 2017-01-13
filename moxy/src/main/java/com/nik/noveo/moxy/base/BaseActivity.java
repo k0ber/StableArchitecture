@@ -5,9 +5,19 @@ import android.support.annotation.LayoutRes;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends MvpAppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends MvpAppCompatActivity {
+
+    @Inject
+    Provider<P> presenterProvider;
+
+    protected P createPresenter() {
+        return presenterProvider.get();
+    }
 
     @LayoutRes
     protected abstract int getLayoutId();

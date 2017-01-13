@@ -9,31 +9,23 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.nik.noveo.moxy.R;
 import com.nik.noveo.moxy.base.BaseActivity;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewsActivity extends BaseActivity implements NewsView {
+public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsView {
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.tv_news)
     TextView messageTextView;
 
-    //region todo Try to move it to base activity
-    @Inject
-    Provider<NewsPresenter> newsPresenterProvider;
-
     @InjectPresenter
     NewsPresenter newsPresenter;
 
     @ProvidePresenter
     NewsPresenter provideNewsPresenter() {
-        return newsPresenterProvider.get();
+        return createPresenter();
     }
-    //endregion
 
     @Override
     protected int getLayoutId() {
