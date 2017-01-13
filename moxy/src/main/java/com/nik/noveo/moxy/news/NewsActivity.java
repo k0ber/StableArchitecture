@@ -22,6 +22,7 @@ public class NewsActivity extends BaseActivity implements NewsView {
     @BindView(R.id.tv_news)
     TextView messageTextView;
 
+    //region todo Try to move it to base activity
     @Inject
     Provider<NewsPresenter> newsPresenterProvider;
 
@@ -32,6 +33,7 @@ public class NewsActivity extends BaseActivity implements NewsView {
     NewsPresenter provideNewsPresenter() {
         return newsPresenterProvider.get();
     }
+    //endregion
 
     @Override
     protected int getLayoutId() {
@@ -40,7 +42,6 @@ public class NewsActivity extends BaseActivity implements NewsView {
 
     @OnClick(R.id.fab_load)
     public void onLoadCLicked() {
-        newsPresenterProvider.get().loadNews();
         newsPresenter.loadNews();
     }
 
