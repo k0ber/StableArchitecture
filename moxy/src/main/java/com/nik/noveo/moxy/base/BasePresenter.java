@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.MvpPresenter;
 import com.arellomobile.mvp.MvpView;
+import com.nik.noveo.moxy.base.di.Injector;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -11,6 +12,10 @@ import rx.subscriptions.CompositeSubscription;
 public class BasePresenter<View extends MvpView> extends MvpPresenter<View> {
 
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
+
+    public BasePresenter() {
+        Injector.inject(this);
+    }
 
     protected void unsubscribeOnDestroy(@NonNull Subscription subscription) {
         compositeSubscription.add(subscription);

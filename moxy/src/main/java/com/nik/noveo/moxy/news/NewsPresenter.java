@@ -9,12 +9,8 @@ import javax.inject.Inject;
 @InjectViewState
 public class NewsPresenter extends BasePresenter<NewsView> {
 
-    private NewsRepository newsRepository;
-
     @Inject
-    public NewsPresenter(NewsRepository newsRepository) {
-        this.newsRepository = newsRepository;
-    }
+    NewsRepository newsRepository;
 
     void loadNews() {
 

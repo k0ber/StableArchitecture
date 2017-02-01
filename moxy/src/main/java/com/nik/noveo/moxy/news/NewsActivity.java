@@ -5,14 +5,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.nik.noveo.moxy.R;
 import com.nik.noveo.moxy.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsView {
+public class NewsActivity extends BaseActivity implements NewsView {
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
@@ -21,11 +20,6 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsVie
 
     @InjectPresenter
     NewsPresenter newsPresenter;
-
-    @ProvidePresenter
-    NewsPresenter provideNewsPresenter() {
-        return createPresenter();
-    }
 
     @Override
     protected int getLayoutId() {
